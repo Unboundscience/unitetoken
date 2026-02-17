@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNITE Token — Spread Technology Around the World Faster</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #6de882;
+  --green-bright: #39ff14;
+  --green-mint: #9cf5a8;
+  --green-dim: #4cba5e;
+  --green-glow: rgba(109, 232, 130, 0.12);
+  --green-glow-strong: rgba(109, 232, 130, 0.25);
+  --silver: #b8b8c0;
+  --silver-dim: #6e6e78;
+  --bg-deep: #050505;
+  --bg-card: #0c0c0e;
+  --bg-card-hover: #111114;
+  --bg-surface: #161619;
+  --text-primary: #e4e4e8;
+  --text-secondary: #8a8a94;
+  --text-muted: #505058;
+  --border: #1e1e24;
+  --border-green: rgba(109, 232, 130, 0.18);
+  --border-silver: rgba(184, 184, 192, 0.12);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+.formula-bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: 0.035;
+  font-family: 'JetBrains Mono', monospace; font-size: 14px;
+  color: var(--green); overflow: hidden;
+}
+.formula-bg span { position: absolute; white-space: nowrap; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(5, 5, 5, 0.88); backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border); padding: 0 40px;
+  height: 64px; display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer; text-decoration: none;
+}
+.nav-logo img { width: 38px; height: 38px; border-radius: 50%; }
+.nav-logo .logo-text {
+  font-family: 'JetBrains Mono', monospace; font-size: 17px;
+  font-weight: 600; color: var(--text-primary); letter-spacing: 1.5px;
+}
+.nav-logo .logo-text em { color: var(--green); font-style: normal; }
+.nav-links { display: flex; gap: 6px; align-items: center; }
+.nav-links a {
+  color: var(--text-secondary); text-decoration: none; font-size: 14px;
+  font-weight: 500; padding: 8px 16px; border-radius: 8px;
+  transition: all 0.25s; letter-spacing: 0.3px;
+}
+.nav-links a:hover, .nav-links a.active {
+  color: var(--green); background: var(--green-glow);
+}
+.nav-links .cta-btn {
+  background: linear-gradient(135deg, var(--green-dim), var(--green));
+  color: #050505; font-weight: 700; padding: 8px 22px;
+  border-radius: 8px; margin-left: 8px;
+}
+.nav-links .cta-btn:hover {
+  background: linear-gradient(135deg, var(--green), var(--green-mint));
+  color: #050505;
+}
+.mobile-toggle {
+  display: none; background: none; border: none;
+  color: var(--green); font-size: 24px; cursor: pointer;
+}
+.page { display: none; }
+.page.active { display: block; }
+section {
+  position: relative; z-index: 1; padding: 100px 40px;
+  max-width: 1280px; margin: 0 auto;
+}
+.hero {
+  padding-top: 140px; padding-bottom: 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center; min-height: 90vh;
+}
+.hero-content { max-width: 560px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green-glow); border: 1px solid var(--border-green);
+  border-radius: 100px; padding: 6px 16px; font-size: 12px;
+  font-weight: 600; color: var(--green); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 24px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.hero-badge .pulse {
+  width: 8px; height: 8px; background: var(--green);
+  border-radius: 50%; animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(109,232,130,0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(109,232,130,0); }
+}
+.hero h1 {
+  font-size: 54px; font-weight: 800; line-height: 1.08;
+  margin-bottom: 24px; letter-spacing: -1.5px;
+}
+.hero h1 .green { color: var(--green); }
+.hero p {
+  font-size: 17px; color: var(--text-secondary); line-height: 1.7;
+  margin-bottom: 32px; max-width: 480px;
+}
+.hero-stats { display: flex; gap: 32px; margin-top: 40px; }
+.hero-stat { border-left: 2px solid var(--green); padding-left: 16px; }
+.hero-stat .value {
+  font-family: 'JetBrains Mono', monospace; font-size: 28px;
+  font-weight: 700; color: var(--green);
+}
+.hero-stat .label {
+  font-size: 12px; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 1px; margin-top: 4px;
+}
+.swap-widget {
+  background: var(--bg-card); border: 1px solid var(--border-silver);
+  border-radius: 20px; padding: 40px 32px; position: relative;
+  overflow: hidden; box-shadow: 0 0 60px rgba(109, 232, 130, 0.04);
+}
+.swap-widget::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), var(--green-mint), transparent);
+}
+.swap-widget-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.swap-widget-header h3 { font-size: 18px; font-weight: 600; }
+.swap-widget-header .powered {
+  font-size: 11px; color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+.swap-placeholder {
+  background: var(--bg-surface); border: 1px dashed var(--border-green);
+  border-radius: 12px; padding: 60px 24px; text-align: center;
+  color: var(--text-muted); font-size: 14px;
+}
+.swap-placeholder .logo-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  margin: 0 auto 16px; display: block; opacity: 0.7;
+}
+.swap-placeholder a { color: var(--green); text-decoration: none; }
+.swap-placeholder a:hover { text-decoration: underline; }
+.section-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--green); margin-bottom: 12px;
+}
+.section-title {
+  font-size: 40px; font-weight: 800; letter-spacing: -1px;
+  margin-bottom: 16px; line-height: 1.15;
+}
+.section-desc {
+  font-size: 16px; color: var(--text-secondary); max-width: 600px;
+  line-height: 1.7; margin-bottom: 48px;
+}
+.platform-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.platform-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px 28px; transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.platform-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 0;
+  background: linear-gradient(180deg, var(--green-glow), transparent);
+  transition: height 0.4s;
+}
+.platform-card:hover { border-color: var(--border-green); transform: translateY(-4px); }
+.platform-card:hover::after { height: 100%; }
+.platform-card .card-inner { position: relative; z-index: 1; }
+.platform-card .card-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--green-glow); border: 1px solid var(--border-green);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 20px;
+}
+.platform-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.platform-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+.platform-card .card-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 16px; font-size: 13px; color: var(--green);
+  text-decoration: none; font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+.platform-card.coming-soon { opacity: 0.35; pointer-events: none; }
+.platform-card.coming-soon .card-icon {
+  filter: grayscale(1); background: rgba(255,255,255,0.02);
+  border-color: var(--border);
+}
+.coming-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text-muted); letter-spacing: 2px;
+  text-transform: uppercase; margin-top: 16px;
+}
+.fund-hero { padding-top: 140px; padding-bottom: 40px; text-align: center; }
+.fund-hero .section-desc { margin: 0 auto 48px; max-width: 700px; }
+.principle-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 20px; margin-bottom: 80px;
+}
+.principle-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 36px 32px; transition: border-color 0.3s;
+}
+.principle-card:hover { border-color: var(--border-green); }
+.principle-card .num {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--green); letter-spacing: 2px; margin-bottom: 16px;
+}
+.principle-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+.principle-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.earn-section {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 20px; padding: 48px 40px; margin-bottom: 80px;
+}
+.earn-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-top: 32px;
+}
+.earn-item {
+  padding: 24px; border-radius: 12px; background: var(--bg-surface);
+  border: 1px solid var(--border); transition: border-color 0.3s;
+}
+.earn-item:hover { border-color: var(--border-green); }
+.earn-item .earn-icon { font-size: 24px; margin-bottom: 12px; }
+.earn-item .earn-platform {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--green); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 8px; opacity: 0.7;
+}
+.earn-item h4 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.earn-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.moderator-section {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 40px; align-items: start;
+}
+.mod-content h2 {
+  font-size: 32px; font-weight: 800; margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+.mod-content p {
+  font-size: 15px; color: var(--text-secondary);
+  line-height: 1.7; margin-bottom: 16px;
+}
+.mod-example {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px;
+}
+.mod-example h4 {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  color: var(--green); letter-spacing: 1px; margin-bottom: 20px;
+}
+.mod-row {
+  display: flex; justify-content: space-between; padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 14px;
+}
+.mod-row:last-child { border: none; }
+.mod-row .name { color: var(--text-secondary); }
+.mod-row .val {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--green); font-weight: 600;
+}
+.tok-hero { padding-top: 140px; padding-bottom: 40px; }
+.contract-bar {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 24px; margin: 32px 0 48px;
+  flex-wrap: wrap;
+}
+.contract-bar .label {
+  font-size: 12px; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 1px; font-family: 'JetBrains Mono', monospace;
+}
+.contract-bar .address {
+  font-family: 'JetBrains Mono', monospace; font-size: 14px;
+  color: var(--green); word-break: break-all;
+}
+.contract-bar .chain-badge {
+  background: var(--green-glow); border: 1px solid var(--border-green);
+  color: var(--green); font-size: 11px; padding: 4px 12px;
+  border-radius: 6px; font-family: 'JetBrains Mono', monospace;
+  font-weight: 600; letter-spacing: 1px; margin-left: auto;
+}
+.tok-metrics {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 20px; margin-bottom: 60px;
+}
+.tok-metric {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px 24px; transition: border-color 0.3s;
+}
+.tok-metric:hover { border-color: var(--border-green); }
+.tok-metric .metric-label {
+  font-size: 12px; color: var(--text-muted); text-transform: uppercase;
+  letter-spacing: 1px; font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 8px;
+}
+.tok-metric .metric-value { font-size: 32px; font-weight: 800; color: var(--text-primary); }
+.tok-metric .metric-value .green { color: var(--green); }
+.tok-metric .metric-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.tok-metric .metric-sub a { color: var(--green); text-decoration: none; }
+.distrib-section { margin-bottom: 60px; }
+.distrib-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 40px; margin-top: 32px;
+}
+.distrib-chart {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px;
+}
+.bar-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.bar-label {
+  width: 180px; font-size: 13px; color: var(--text-secondary);
+  flex-shrink: 0; text-align: right;
+}
+.bar-track {
+  flex: 1; height: 28px; background: var(--bg-surface);
+  border-radius: 6px; overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green-dim), var(--green));
+  border-radius: 6px; display: flex; align-items: center;
+  justify-content: flex-end; padding-right: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  font-weight: 700; color: #050505; min-width: 32px;
+}
+.vesting-table {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px;
+}
+.vesting-table h4 {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  color: var(--green); letter-spacing: 1px; margin-bottom: 20px;
+}
+.vest-row {
+  display: flex; justify-content: space-between; padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 13px;
+}
+.vest-row:last-child { border: none; }
+.vest-row .vest-name { color: var(--text-secondary); }
+.vest-row .vest-sched {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-primary); font-size: 12px;
+}
+.emission-section { margin-bottom: 60px; }
+.emission-chart {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px; margin-top: 32px;
+}
+.emission-chart canvas { width: 100% !important; height: 300px !important; }
+.emission-info {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; margin-top: 24px;
+}
+.emission-info-item {
+  padding: 16px; background: var(--bg-surface);
+  border-radius: 10px; border: 1px solid var(--border);
+}
+.emission-info-item h5 {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--green); letter-spacing: 1px; margin-bottom: 6px;
+}
+.emission-info-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+footer {
+  position: relative; z-index: 1; border-top: 1px solid var(--border);
+  padding: 40px; text-align: center;
+}
+.footer-links {
+  display: flex; justify-content: center; gap: 24px;
+  margin-bottom: 16px; flex-wrap: wrap;
+}
+.footer-links a {
+  color: var(--text-secondary); text-decoration: none; font-size: 13px;
+  font-family: 'JetBrains Mono', monospace; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--green); }
+.footer-copy { font-size: 12px; color: var(--text-muted); }
+.footer-copy .green { color: var(--green); }
+.disclaimer-bar {
+  position: relative; z-index: 1;
+  background: rgba(109, 232, 130, 0.03);
+  border-top: 1px solid var(--border-green);
+  padding: 20px 40px; text-align: center; font-size: 11px;
+  color: var(--text-muted); line-height: 1.6;
+  max-width: 900px; margin: 0 auto;
+}
+.silver-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--silver-dim), var(--silver), var(--silver-dim), transparent);
+  margin: 0 auto; max-width: 600px; opacity: 0.3;
+  position: relative; z-index: 1;
+}
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; gap: 40px; min-height: auto; }
+  .hero h1 { font-size: 42px; }
+  .platform-grid { grid-template-columns: repeat(2, 1fr); }
+  .tok-metrics { grid-template-columns: repeat(2, 1fr); }
+  .distrib-grid { grid-template-columns: 1fr; }
+  .moderator-section { grid-template-columns: 1fr; }
+  .principle-grid { grid-template-columns: 1fr; }
+  .emission-info { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  section { padding: 60px 20px; }
+  .hero { padding-top: 100px; }
+  .hero h1 { font-size: 32px; }
+  .hero-stats { flex-direction: column; gap: 16px; }
+  .platform-grid { grid-template-columns: 1fr; }
+  .tok-metrics { grid-template-columns: 1fr; }
+  .earn-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column; position: absolute;
+    top: 64px; left: 0; right: 0; background: rgba(5,5,5,0.95);
+    backdrop-filter: blur(20px); padding: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-toggle { display: block; }
+  .contract-bar { flex-direction: column; align-items: flex-start; }
+  .contract-bar .chain-badge { margin-left: 0; }
+  .bar-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .bar-label { width: auto; text-align: left; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { opacity: 0; animation: fadeUp 0.8s ease forwards; }
+.fade-in:nth-child(2) { animation-delay: 0.1s; }
+.fade-in:nth-child(3) { animation-delay: 0.2s; }
+.fade-in:nth-child(4) { animation-delay: 0.3s; }
+.fade-in:nth-child(5) { animation-delay: 0.4s; }
+.fade-in:nth-child(6) { animation-delay: 0.5s; }
+</style>
+</head>
+<body>
+<div class="formula-bg" id="formulaBg"></div>
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">
+    <img src="logo.png" alt="UNITE">
+    <span class="logo-text"><em>UN</em>ITE</span>
+  </a>
+  <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home'); return false;" class="active" data-page="home">Home</a>
+    <a href="#" onclick="showPage('fundamentals'); return false;" data-page="fundamentals">Fundamentals</a>
+    <a href="#" onclick="showPage('tokenomics'); return false;" data-page="tokenomics">Tokenomics</a>
+    <a class="cta-btn" href="https://coinmetro.com" target="_blank">Buy UNITE</a>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge fade-in"><span class="pulse"></span> Live on Arbitrum</div>
+      <h1 class="fade-in">The New Standard<br>in <span class="green">Altcoin Design</span></h1>
+      <p class="fade-in">UNITE is the governance and utility token of the Unbound Science ecosystem &mdash; purpose-built for scientific funding, not speculation. Backed by real revenues from multiple products and designed for long-term fundamentals.</p>
+      <div class="hero-stats fade-in">
+        <div class="hero-stat">
+          <div class="value">1B</div>
+          <div class="label">Total Supply</div>
+        </div>
+        <div class="hero-stat">
+          <div class="value">20yr</div>
+          <div class="label">Emission Curve</div>
+        </div>
+        <div class="hero-stat">
+          <div class="value">50/50</div>
+          <div class="label">Revenue Split</div>
+        </div>
+      </div>
+    </div>
+    <div class="swap-widget fade-in">
+      <div class="swap-widget-header">
+        <h3>Buy $UNITE</h3>
+        <span class="powered">via Coinmetro</span>
+      </div>
+      <div class="swap-placeholder" id="swapPlaceholder">
+        <img class="logo-icon" src="logo.png" alt="UNITE">
+        <p>Swap widget loading&hellip;<br><br>
+        Trade UNITE on <a href="https://coinmetro.com" target="_blank">Coinmetro.com</a><br>
+        <span style="font-size:11px; color:var(--text-muted); margin-top:8px; display:block;">Widget embed link coming soon</span></p>
+      </div>
+    </div>
+  </section>
+  <div class="silver-divider"></div>
+  <section>
+    <div class="section-tag fade-in">Ecosystem</div>
+    <h2 class="section-title fade-in">Where UNITE Unlocks Value</h2>
+    <p class="section-desc fade-in">UNITE tokens are used across a growing portfolio of platforms built by Obsanity Labs. Holding and staking UNITE unlocks premium features, governance rights, and revenue share across the ecosystem.</p>
+    <div class="platform-grid">
+      <div class="platform-card fade-in">
+        <div class="card-inner">
+          <div class="card-icon">&#x1F52C;</div>
+          <h3>Unbound Science</h3>
+          <p>The flagship DeSci platform. Vote on funding proposals, support inventors, earn tokens through participation, and stake to become a Moderator with revenue-share stipends.</p>
+          <a class="card-link" href="https://alpha.unboundscience.io" target="_blank">alpha.unboundscience.io &rarr;</a>
+        </div>
+      </div>
+      <div class="platform-card fade-in">
+        <div class="card-inner">
+          <div class="card-icon">&#x1F4DE;</div>
+          <h3>Phreaking.fun</h3>
+          <p>Phone hacker-themed DeFi tool. Swap tokens through Red, Blue, and White boxes &mdash; each transaction fee supports DeSci and purchases UNITE from the open market.</p>
+          <a class="card-link" href="https://phreaking.fun" target="_blank">phreaking.fun &rarr;</a>
+        </div>
+      </div>
+      <div class="platform-card coming-soon fade-in">
+        <div class="card-inner">
+          <div class="card-icon">&#x2B21;</div>
+          <h3>Coming Soon</h3>
+          <p>More ecosystem products in development. UNITE utility expands with each new launch.</p>
+          <div class="coming-label">Coming Soon</div>
+        </div>
+      </div>
+      <div class="platform-card coming-soon fade-in">
+        <div class="card-inner">
+          <div class="card-icon">&#x2B21;</div>
+          <h3>Coming Soon</h3>
+          <p>Additional revenue streams feed back into UNITE and the DeSci ecosystem.</p>
+          <div class="coming-label">Coming Soon</div>
+        </div>
+      </div>
+      <div class="platform-card coming-soon fade-in">
+        <div class="card-inner">
+          <div class="card-icon">&#x2B21;</div>
+          <h3>Coming Soon</h3>
+          <p>New platforms, new features, new ways to earn and use UNITE tokens.</p>
+          <div class="coming-label">Coming Soon</div>
+        </div>
+      </div>
+      <div class="platform-card coming-soon fade-in">
+        <div class="card-inner">
+          <div class="card-icon">&#x2B21;</div>
+          <h3>Coming Soon</h3>
+          <p>Every new product adds real revenue and real utility to the UNITE token.</p>
+          <div class="coming-label">Coming Soon</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FUNDAMENTALS -->
+<div class="page" id="page-fundamentals">
+  <section class="fund-hero">
+    <div class="section-tag fade-in">Fundamentals</div>
+    <h2 class="section-title fade-in">Built for Real Value,<br>Not Speculation</h2>
+    <p class="section-desc fade-in">UNITE is designed around real revenue, governance utility, and long-term alignment between scientists, donors, and the community. Here&rsquo;s why the fundamentals matter.</p>
+  </section>
+  <section style="padding-top:0;">
+    <div class="principle-grid">
+      <div class="principle-card fade-in">
+        <div class="num">01 &mdash; REVENUE-BACKED</div>
+        <h3>Multiple Revenue Streams</h3>
+        <p>Platform fees from donations, royalties, licensing, bounties, peer review, storage, and premium subscriptions all flow back into the ecosystem. 50% of all platform revenue is distributed to Moderator-class token holders in USDC &mdash; not in more tokens.</p>
+      </div>
+      <div class="principle-card fade-in">
+        <div class="num">02 &mdash; GOVERNANCE</div>
+        <h3>Scientific Governance, Not Financial Speculation</h3>
+        <p>UNITE&rsquo;s primary purpose is voting on how funding pools are spent &mdash; choosing which inventors receive grants. Token holders don&rsquo;t control the company; they direct scientific funding. This is governance with real-world impact.</p>
+      </div>
+      <div class="principle-card fade-in">
+        <div class="num">03 &mdash; SCIENTIST-FIRST</div>
+        <h3>Inventors Keep 100% Ownership</h3>
+        <p>Unlike traditional grants or VC funding, scientists on Unbound Science retain full ownership of their technology. No equity is taken, no revenue share from personal sales. The platform exists to accelerate science, not extract from it.</p>
+      </div>
+      <div class="principle-card fade-in">
+        <div class="num">04 &mdash; ANTI-DUMP DESIGN</div>
+        <h3>Conservative Emission &amp; Long Vesting</h3>
+        <p>Only 1% circulating at launch. 40% locked in a 20-year emission curve that halves every 4 years. Team tokens vest over 4 years. Foundation tokens are locked forever. The tokenomics discourage dumping and reward patient participation.</p>
+      </div>
+    </div>
+  </section>
+  <div class="silver-divider"></div>
+  <section>
+    <div class="earn-section">
+      <div class="section-tag">Earn</div>
+      <h2 class="section-title" style="margin-bottom:8px;">How You Earn UNITE</h2>
+      <p style="color:var(--text-secondary); font-size:15px; margin-bottom:8px;">Every user class can earn tokens across multiple platforms in the ecosystem.</p>
+      <div class="earn-grid">
+        <div class="earn-item fade-in">
+          <div class="earn-icon">&#x1F3AC;</div>
+          <div class="earn-platform">Unbound Science</div>
+          <h4>Watch &amp; Engage</h4>
+          <p>Watch inventor videos, comment, and engage with content. Time spent on the platform is rewarded.</p>
+        </div>
+        <div class="earn-item fade-in">
+          <div class="earn-icon">&#x1F50D;</div>
+          <div class="earn-platform">Unbound Science</div>
+          <h4>Peer Review</h4>
+          <p>Participate in peer review sessions and reach consensus on submissions.</p>
+        </div>
+        <div class="earn-item fade-in">
+          <div class="earn-icon">&#x1F4E4;</div>
+          <div class="earn-platform">Unbound Science</div>
+          <h4>Upload Data</h4>
+          <p>Scientists earn by uploading weekly experiment content, data, and research materials.</p>
+        </div>
+        <div class="earn-item fade-in">
+          <div class="earn-icon">&#x1F4B0;</div>
+          <div class="earn-platform">Unbound Science</div>
+          <h4>Donate</h4>
+          <p>Donors earn tokens and get tax receipts, plus higher voting weights and leaderboard status.</p>
+        </div>
+        <div class="earn-item fade-in">
+          <div class="earn-icon">&#x1F5F3;</div>
+          <div class="earn-platform">Unbound Science</div>
+          <h4>Vote</h4>
+          <p>Stake tokens for permanent voting power &mdash; tokens aren&rsquo;t consumed by voting.</p>
+        </div>
+        <div class="earn-item fade-in">
+          <div class="earn-icon">&#x1F4DE;</div>
+          <div class="earn-platform">Phreaking.fun</div>
+          <h4>Swap with Boxes</h4>
+          <p>Every token swap through Red, Blue, and White boxes carries a fee that purchases UNITE from the market, supporting the ecosystem.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section style="padding-top:0;">
+    <div class="moderator-section">
+      <div class="mod-content">
+        <div class="section-tag">Revenue Share</div>
+        <h2>The Moderator Stipend</h2>
+        <p>50% of all Unbound Science platform revenue is distributed weekly in USDC to holders of Moderator NFTs. Each NFT is earned by staking 100,000 UNITE tokens and agreeing to help keep the platform clean and on-mission.</p>
+        <p>NFTs can be stacked &mdash; every additional 100k staked mints another NFT and another slice of the stipend pool. No NFTs are sold to investors; the only way to get one is to earn it.</p>
+        <p style="color:var(--text-muted); font-size:13px; font-style: italic;">The Top Moderator may be invited to serve a term on the Foundation&rsquo;s Board of Directors.</p>
+      </div>
+      <div class="mod-example">
+        <h4>Example &mdash; Year 5, $10M Platform Revenue</h4>
+        <div class="mod-row"><span class="name">Circulating Supply</span><span class="val">~400M</span></div>
+        <div class="mod-row"><span class="name">Staking Rate</span><span class="val">50%</span></div>
+        <div class="mod-row"><span class="name">Active Moderator NFTs</span><span class="val">~2,000</span></div>
+        <div class="mod-row"><span class="name">Stipend Pool (50%)</span><span class="val">$5,000,000</span></div>
+        <div class="mod-row"><span class="name">1 NFT Annual Stipend</span><span class="val">$2,500</span></div>
+        <div class="mod-row"><span class="name">10 NFT Annual Stipend</span><span class="val">$25,000</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TOKENOMICS -->
+<div class="page" id="page-tokenomics">
+  <section class="tok-hero">
+    <div class="section-tag fade-in">Tokenomics</div>
+    <h2 class="section-title fade-in">$UNITE Token Data</h2>
+    <p class="section-desc fade-in">Transparent supply mechanics designed for a 20+ year horizon. No short-term unlock shocks, no insider dumps.</p>
+    <div class="contract-bar fade-in">
+      <span class="label">Contract</span>
+      <span class="address">0xb14448B48452D7bA076aBeb3c505Fc044DEAF4E9</span>
+      <span class="chain-badge">ARBITRUM</span>
+    </div>
+    <div class="tok-metrics fade-in">
+      <div class="tok-metric">
+        <div class="metric-label">Total Supply</div>
+        <div class="metric-value">1<span class="green">B</span></div>
+        <div class="metric-sub">1,000,000,000 UNITE</div>
+      </div>
+      <div class="tok-metric">
+        <div class="metric-label">Circulating</div>
+        <div class="metric-value">~1<span class="green">%</span></div>
+        <div class="metric-sub">~10M tokens in circulation</div>
+      </div>
+      <div class="tok-metric">
+        <div class="metric-label">Holders</div>
+        <div class="metric-value" id="holderCount"><span class="green">&mdash;</span></div>
+        <div class="metric-sub"><a href="https://arbiscan.io/token/0xb14448B48452D7bA076aBeb3c505Fc044DEAF4E9" target="_blank">Live on Arbiscan &#x2197;</a></div>
+      </div>
+      <div class="tok-metric">
+        <div class="metric-label">Halving Cycle</div>
+        <div class="metric-value">4<span class="green">yr</span></div>
+        <div class="metric-sub">Rewards halve every 4 years</div>
+      </div>
+    </div>
+  </section>
+  <section class="distrib-section" style="padding-top:0;">
+    <div class="section-tag">Distribution</div>
+    <h2 class="section-title">Token Allocation</h2>
+    <div class="distrib-grid">
+      <div class="distrib-chart">
+        <div class="bar-row"><span class="bar-label">Participation Pool</span><div class="bar-track"><div class="bar-fill" style="width:80%">40%</div></div></div>
+        <div class="bar-row"><span class="bar-label">Marketing</span><div class="bar-track"><div class="bar-fill" style="width:40%">20%</div></div></div>
+        <div class="bar-row"><span class="bar-label">Public Sale</span><div class="bar-track"><div class="bar-fill" style="width:30%">15%</div></div></div>
+        <div class="bar-row"><span class="bar-label">Team</span><div class="bar-track"><div class="bar-fill" style="width:20%">10%</div></div></div>
+        <div class="bar-row"><span class="bar-label">Foundation</span><div class="bar-track"><div class="bar-fill" style="width:20%">10%</div></div></div>
+        <div class="bar-row"><span class="bar-label">Advisors</span><div class="bar-track"><div class="bar-fill" style="width:4%">2%</div></div></div>
+        <div class="bar-row"><span class="bar-label">Early Eco Partners</span><div class="bar-track"><div class="bar-fill" style="width:4%">2%</div></div></div>
+        <div class="bar-row"><span class="bar-label">Early Investors</span><div class="bar-track"><div class="bar-fill" style="width:2%">1%</div></div></div>
+      </div>
+      <div class="vesting-table">
+        <h4>Vesting Schedule</h4>
+        <div class="vest-row"><span class="vest-name">Foundation</span><span class="vest-sched" style="color:var(--green)">&#x1F512; Locked Forever</span></div>
+        <div class="vest-row"><span class="vest-name">Participation Pool</span><span class="vest-sched">20-year distribution</span></div>
+        <div class="vest-row"><span class="vest-name">Team</span><span class="vest-sched">4yr monthly vesting</span></div>
+        <div class="vest-row"><span class="vest-name">Advisors</span><span class="vest-sched">4yr monthly vesting</span></div>
+        <div class="vest-row"><span class="vest-name">Marketing</span><span class="vest-sched">Liquid (10% staked)</span></div>
+        <div class="vest-row"><span class="vest-name">Public Sale</span><span class="vest-sched">Liquid</span></div>
+        <div class="vest-row"><span class="vest-name">Early Eco Partners</span><span class="vest-sched">Liquid</span></div>
+        <div class="vest-row"><span class="vest-name">Early Investors</span><span class="vest-sched">Liquid</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="emission-section" style="padding-top:0;">
+    <div class="section-tag">Emissions</div>
+    <h2 class="section-title">Participation Reward Schedule</h2>
+    <p class="section-desc">50M UNITE per year from the Participation Pool, distributed weekly. Rewards halve every 4 years. Tail emission from the Foundation treasury after 2045.</p>
+    <div class="emission-chart">
+      <canvas id="emissionCanvas"></canvas>
+      <div class="emission-info">
+        <div class="emission-info-item"><h5>Years 1&ndash;4</h5><p>50M UNITE/yr &mdash; highest early rewards for first adopters.</p></div>
+        <div class="emission-info-item"><h5>Years 5&ndash;8</h5><p>25M UNITE/yr &mdash; rewards halve after the first cycle.</p></div>
+        <div class="emission-info-item"><h5>Post-2045</h5><p>Foundation buys back UNITE to sustain tail emission at the final halving rate.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="disclaimer-bar">
+  There are no guarantees of profit. UNITE tokens are not intended to function like securities and entitle holders to no voting rights over the platform or company operations. Any value is subject to crypto market conditions and community efforts. This is not financial advice.
+</div>
+<footer>
+  <div class="footer-links">
+    <a href="https://unboundscience.com" target="_blank">Website</a>
+    <a href="https://alpha.unboundscience.io" target="_blank">Platform</a>
+    <a href="https://twitter.com/unboundscience" target="_blank">Twitter / X</a>
+    <a href="https://t.me/unboundscience" target="_blank">Telegram</a>
+    <a href="https://medium.com/@unboundscience" target="_blank">Blog</a>
+    <a href="https://arbiscan.io/token/0xb14448B48452D7bA076aBeb3c505Fc044DEAF4E9" target="_blank">Arbiscan</a>
+  </div>
+  <div class="footer-copy">&copy; 2025 Obsanity Labs &mdash; <span class="green">Unbound [Sc]ience</span></div>
+</footer>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a[data-page]').forEach(function(a) {
+    a.classList.toggle('active', a.dataset.page === page);
+  });
+  document.querySelector('.nav-links').classList.remove('open');
+  window.scrollTo(0, 0);
+  document.getElementById('page-' + page).querySelectorAll('.fade-in').forEach(function(el) {
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = '';
+  });
+}
+
+(function() {
+  var formulas = [
+    'E = mc\u00B2', 'F = ma', '\u0394G = \u0394H - T\u0394S', 'PV = nRT', '\u03BB = h/mv',
+    '\u0394d = (2k+1)\u03BB/2', 'F = kq\u2081q\u2082/r\u00B2',
+    'T = 2\u03C0\u221A(LC)', 'P = F/S', '\u03C6 = \u222BB\u00B7dA',
+    'S = k\u00B7ln(W)', 'Ft = \u0394p', 'E = hf', 'p = mv',
+    'KE = \u00BDmv\u00B2', 'Q = mc\u0394T', '\u03B7 = W/Q',
+    '\u0394S \u2265 0', 'dU = \u03B4Q - \u03B4W', 'F = -kx', 'a = v\u00B2/r'
+  ];
+  var bg = document.getElementById('formulaBg');
+  for (var i = 0; i < 45; i++) {
+    var span = document.createElement('span');
+    span.textContent = formulas[Math.floor(Math.random() * formulas.length)];
+    span.style.left = Math.random() * 100 + '%';
+    span.style.top = Math.random() * 100 + '%';
+    span.style.transform = 'rotate(' + (Math.random() * 40 - 20) + 'deg)';
+    span.style.fontSize = (10 + Math.random() * 14) + 'px';
+    span.style.opacity = (0.3 + Math.random() * 0.7);
+    bg.appendChild(span);
+  }
+})();
+
+(async function() {
+  var el = document.getElementById('holderCount');
+  try {
+    var resp = await fetch('https://api.arbiscan.io/api?module=token&action=tokeninfo&contractaddress=0xb14448B48452D7bA076aBeb3c505Fc044DEAF4E9');
+    var data = await resp.json();
+    if (data.result && data.result[0] && data.result[0].holdersCount) {
+      el.innerHTML = '<span class="green">' + Number(data.result[0].holdersCount).toLocaleString() + '</span>';
+    }
+  } catch(e) {}
+})();
+
+(function() {
+  var canvas = document.getElementById('emissionCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  function drawChart() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var w = rect.width - 64;
+    var h = 280;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var years = 20;
+    var barWidth = (w - 60) / years - 4;
+    var rates = [];
+    var annualRate = 50000000;
+    for (var i = 0; i < years; i++) {
+      rates.push(annualRate);
+      if ((i + 1) % 4 === 0) annualRate /= 2;
+    }
+    var maxRate = Math.max.apply(null, rates);
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    ctx.lineWidth = 1;
+    for (var i = 0; i <= 4; i++) {
+      var y = h - 30 - (i / 4) * (h - 50);
+      ctx.beginPath(); ctx.moveTo(50, y); ctx.lineTo(w, y); ctx.stroke();
+      ctx.fillStyle = '#505058';
+      ctx.font = '10px JetBrains Mono';
+      ctx.textAlign = 'right';
+      ctx.fillText((maxRate * i / 4 / 1000000).toFixed(0) + 'M', 45, y + 4);
+    }
+    var greens = ['#6de882', '#5cd670', '#4cba5e', '#3ca04e', '#2d8840'];
+    for (var i = 0; i < years; i++) {
+      var barH = (rates[i] / maxRate) * (h - 50);
+      var x = 55 + i * (barWidth + 4);
+      var y = h - 30 - barH;
+      var ci = Math.floor(i / 4);
+      var grad = ctx.createLinearGradient(x, y + barH, x, y);
+      grad.addColorStop(0, greens[Math.min(ci, greens.length - 1)]);
+      grad.addColorStop(1, '#9cf5a8');
+      ctx.fillStyle = grad;
+      ctx.globalAlpha = 1 - (ci * 0.12);
+      ctx.beginPath();
+      ctx.roundRect(x, y, barWidth, barH, [3, 3, 0, 0]);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = '#505058';
+      ctx.font = '9px JetBrains Mono';
+      ctx.textAlign = 'center';
+      ctx.fillText('Y' + (i + 1), x + barWidth / 2, h - 14);
+    }
+  }
+  drawChart();
+  window.addEventListener('resize', drawChart);
+})();
+</script>
+</body>
+</html>
