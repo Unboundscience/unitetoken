@@ -127,35 +127,7 @@ section {
   font-size: 12px; color: var(--text-muted); text-transform: uppercase;
   letter-spacing: 1px; margin-top: 4px;
 }
-.swap-widget {
-  background: var(--bg-card); border: 1px solid var(--border-silver);
-  border-radius: 20px; padding: 40px 32px; position: relative;
-  overflow: hidden; box-shadow: 0 0 60px rgba(109, 232, 130, 0.04);
-}
-.swap-widget::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--green), var(--green-mint), transparent);
-}
-.swap-widget-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 24px;
-}
-.swap-widget-header h3 { font-size: 18px; font-weight: 600; }
-.swap-widget-header .powered {
-  font-size: 11px; color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
-}
-.swap-placeholder {
-  background: var(--bg-surface); border: 1px dashed var(--border-green);
-  border-radius: 12px; padding: 60px 24px; text-align: center;
-  color: var(--text-muted); font-size: 14px;
-}
-.swap-placeholder .logo-icon {
-  width: 64px; height: 64px; border-radius: 50%;
-  margin: 0 auto 16px; display: block; opacity: 0.7;
-}
-.swap-placeholder a { color: var(--green); text-decoration: none; }
-.swap-placeholder a:hover { text-decoration: underline; }
+
 .section-tag {
   font-family: 'JetBrains Mono', monospace; font-size: 11px;
   font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
@@ -488,17 +460,8 @@ footer {
         </div>
       </div>
     </div>
-    <div class="swap-widget fade-in">
-      <div class="swap-widget-header">
-        <h3>Buy $UNITE</h3>
-        <span class="powered">via Coinmetro</span>
-      </div>
-      <div class="swap-placeholder" id="swapPlaceholder">
-        <img class="logo-icon" src="logo.png" alt="UNITE">
-        <p>Swap widget loading&hellip;<br><br>
-        Trade UNITE on <a href="https://coinmetro.com" target="_blank">Coinmetro.com</a><br>
-        <span style="font-size:11px; color:var(--text-muted); margin-top:8px; display:block;">Widget embed link coming soon</span></p>
-      </div>
+    <div class="hero-image-container fade-in" style="display: flex; justify-content: center; align-items: center;">
+      <img src="unite-logo-simple.png" alt="UNITE Logo" style="max-width: 80%; height: auto; filter: drop-shadow(0 0 40px rgba(109, 232, 130, 0.2));">
     </div>
   </section>
   <div class="silver-divider"></div>
